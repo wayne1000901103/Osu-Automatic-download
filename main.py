@@ -99,7 +99,7 @@ def sanitize_filename(filename):
         sanitized = name_part[:250-len(ext_part)] + ext_part
     return sanitized
 
-def download_beatmap(beatmap_set_id, beatmap_title):
+def download_beatmap(beatmap_set_id, beatmap_title, download_folder=None):
     """下載 beatmap"""
     fallback_urls = [
         f"https://catboy.best/d/{beatmap_set_id}",
@@ -111,7 +111,8 @@ def download_beatmap(beatmap_set_id, beatmap_title):
 
     raw_filename = f"{beatmap_set_id} {beatmap_title}.osz"
     safe_filename = sanitize_filename(raw_filename)
-    filename = os.path.join(DOWNLOAD_FOLDER, safe_filename)
+    folder = download_folder if download_folder else DEFAULT_DOWNLOAD_FOLDER
+    filename = os.path.join(folder, safe_filename)
 
     for url in fallback_urls:
         print(f"\n嘗試下載: {beatmap_title} (ID: {beatmap_set_id})\n來源: {url}")
